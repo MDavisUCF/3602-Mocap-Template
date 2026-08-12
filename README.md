@@ -21,73 +21,185 @@
 
 <hr>
 
-<details open>
-  <summary><strong>Unity Version</strong></summary>
+<h2>Unity Version</h2>
 
-  <p>
-    This project was created using:
-  </p>
+<p>
+  This project was created using:
+</p>
 
-  <p>
-    <strong>Unity 6.3 LTS</strong>
-  </p>
+<p>
+  <strong>Unity 6.3 LTS</strong>
+</p>
 
-  <p>
-    Open the project using the Unity version specified by your instructor. Opening the project in a
-    different Unity version may cause compatibility issues.
-  </p>
-</details>
+<p>
+  Open the project using the Unity version specified by your instructor. Opening the project in a different
+  Unity version may cause compatibility issues.
+</p>
 
 <hr>
 
-<details open>
-  <summary><strong>How to Download This Template</strong></summary>
+<h2>How to Download This Template</h2>
 
-  <p>
-    To download this Unity template from GitHub:
-  </p>
+<p>
+  To download this Unity template from GitHub:
+</p>
 
-  <ol>
-    <li>Click the green <strong>Code</strong> button near the top of the GitHub page.</li>
-    <li>Select <strong>Download ZIP</strong>.</li>
-    <li>Extract/unzip the downloaded folder.</li>
-    <li>Open <strong>Unity Hub</strong>.</li>
-    <li>Click <strong>Add</strong> or <strong>Add project from disk</strong>.</li>
-    <li>Select the extracted project folder.</li>
-    <li>Open the project using the Unity version listed for the course.</li>
-  </ol>
+<ol>
+  <li>Click the green <strong>Code</strong> button near the top of the GitHub page.</li>
+  <li>Select <strong>Download ZIP</strong>.</li>
+  <li>Extract/unzip the downloaded folder.</li>
+  <li>Open <strong>Unity Hub</strong>.</li>
+  <li>Click <strong>Add</strong> or <strong>Add project from disk</strong>.</li>
+  <li>Select the extracted project folder.</li>
+  <li>Open the project using the Unity version listed for the course.</li>
+</ol>
 
-  <p>
-    <strong>Do not open the project directly from inside the ZIP file.</strong><br>
-    The folder must be fully extracted first.
-  </p>
-</details>
+<p>
+  <strong>Do not open the project directly from inside the ZIP file.</strong><br>
+  The folder must be fully extracted first.
+</p>
 
 <hr>
 
-<details open>
-  <summary><strong>Student Workflow Rule</strong></summary>
+<h2>Student Workflow Rule</h2>
 
-  <p>
-    Do not modify the master template scene directly.
-  </p>
+<p>
+  Do not modify the master template scene directly.
+</p>
 
-  <p>
-    Before starting your project:
-  </p>
+<p>
+  Before starting your project:
+</p>
 
-  <ol>
-    <li>Open the template project in Unity.</li>
-    <li>Open the scene named <code>MASTER_DO_NOT_EDIT</code>.</li>
-    <li>Use <strong>File &gt; Save As</strong>.</li>
-    <li>Save your copy in: <code>Assets/StudentWork/Scenes/</code></li>
-    <li>Rename your scene using this format: <code>TeamName_ProjectName.unity</code></li>
-  </ol>
+<ol>
+  <li>Open the template project in Unity.</li>
+  <li>Open the scene named <code>MASTER_DO_NOT_EDIT</code>.</li>
+  <li>Use <strong>File &gt; Save As</strong>.</li>
+  <li>Save your copy in <code>Assets/StudentWork/Scenes/</code>.</li>
+  <li>Rename your scene using this format: <code>TeamName_ProjectName.unity</code>.</li>
+</ol>
 
-  <p>
-    All new student-created assets should go inside the <code>Assets/StudentWork/</code> folder.
-  </p>
-</details>
+<p>
+  All new student-created assets should go inside the <code>Assets/StudentWork/</code> folder.
+</p>
+
+<hr>
+
+<h2>Controls</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Input</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>WASD</code></td>
+      <td>Move prop in DebugKeyboard mode</td>
+    </tr>
+    <tr>
+      <td><code>SPACE</code></td>
+      <td>Activate prop</td>
+    </tr>
+    <tr>
+      <td><code>M</code></td>
+      <td>Toggle input mode</td>
+    </tr>
+    <tr>
+      <td><code>R</code></td>
+      <td>Reset scene</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Input Modes</h2>
+
+<h3>1. DebugKeyboard</h3>
+
+<p>
+  Keyboard-based testing mode. Use this mode first when designing and testing gameplay mechanics.
+</p>
+
+<p>
+  In this mode, keyboard input moves <code>Target_MocapInput</code>, and
+  <code>Player_TrackedProp</code> follows it.
+</p>
+
+<h3>2. MocapPlaceholder</h3>
+
+<p>
+  Simulated motion capture mode. This mode uses automated circular movement to mimic incoming tracking data.
+  It is useful for testing motion-driven gameplay without needing access to the mocap lab.
+</p>
+
+<p>
+  In this mode, <code>Target_MocapInput</code> moves automatically in a circle, and
+  <code>Player_TrackedProp</code> follows it. <code>SPACE</code> still controls prop activation.
+</p>
+
+<h3>3. MocapLive</h3>
+
+<p>
+  Live motion capture mode. This mode is intended for OptiTrack Motive integration.
+</p>
+
+<p>
+  In this mode, <code>Source_OptiTrackRigidBody_DO_NOT_EDIT</code> provides live mocap position/rotation,
+  <code>InputManager</code> copies that data to <code>Target_MocapInput</code>, and
+  <code>Player_TrackedProp</code> follows <code>Target_MocapInput</code>.
+</p>
+
+<hr>
+
+<h2>Gameplay Rules</h2>
+
+<h3>Score Zones</h3>
+
+<p>
+  Green score zones increase the score when the prop enters while active.
+</p>
+
+<pre><code>Active prop enters ScoreZone = score increases
+Inactive prop enters ScoreZone = no effect</code></pre>
+
+<h3>Danger Zones</h3>
+
+<p>
+  Red danger zones decrease the score when the prop enters while active.
+</p>
+
+<pre><code>Active prop enters DangerZone = score decreases
+Inactive prop enters DangerZone = no effect</code></pre>
+
+<h3>Prop Activation</h3>
+
+<p>
+  The prop must be active to interact with gameplay zones. In DebugKeyboard and MocapPlaceholder modes,
+  the prop is activated by holding <code>SPACE</code>.
+</p>
+
+<p>
+  The prop changes material based on its input mode and active state.
+</p>
+
+<hr>
+
+<h2>Recommended Workflow</h2>
+
+<ol>
+  <li>Duplicate the master scene.</li>
+  <li>Save your copy in <code>Assets/StudentWork/Scenes/</code>.</li>
+  <li>Prototype gameplay in DebugKeyboard mode.</li>
+  <li>Test score zones, danger zones, UI, and audio.</li>
+  <li>Test motion-based interaction using MocapPlaceholder mode.</li>
+  <li>Build and test physical/reactive prop systems.</li>
+  <li>Integrate motion capture tracking using MocapLive mode.</li>
+  <li>Polish gameplay, feedback, UI, and physical interaction.</li>
+</ol>
 
 <hr>
 
@@ -117,8 +229,6 @@
   <p>
     Contains sound effects used by the template.
   </p>
-
-  <p>Examples:</p>
 
   <pre><code>SFX_Score
 SFX_Danger
@@ -154,8 +264,6 @@ SFX_Reset</code></pre>
   <p>
     Contains reusable gameplay objects.
   </p>
-
-  <p>Current prefabs include:</p>
 
   <pre><code>Player_TrackedProp
 ScoreZone
@@ -235,10 +343,6 @@ DangerZone</code></pre>
 
   <h3>Systems</h3>
 
-  <p>
-    Contains global managers and core systems.
-  </p>
-
   <pre><code>GameManager
 InputManager
 UIManager
@@ -247,18 +351,10 @@ EventSystem</code></pre>
 
   <h3>Camera / Lighting</h3>
 
-  <p>
-    Contains the main camera and scene lighting.
-  </p>
-
   <pre><code>Main Camera
 Directional Light</code></pre>
 
   <h3>Gameplay</h3>
-
-  <p>
-    Contains gameplay objects and interaction systems.
-  </p>
 
   <pre><code>Floor
 Player_TrackedProp
@@ -268,18 +364,10 @@ DangerZone</code></pre>
 
   <h3>OptiTrack / Mocap</h3>
 
-  <p>
-    Contains motion capture source objects.
-  </p>
-
   <pre><code>Source_OptiTrackRigidBody_DO_NOT_EDIT
 OptiTrackClient</code></pre>
 
   <h3>UI</h3>
-
-  <p>
-    Contains all HUD and interface elements.
-  </p>
 
   <pre><code>UI_Canvas</code></pre>
 
@@ -298,23 +386,16 @@ OptiTrackClient</code></pre>
   <h3>Player_TrackedProp</h3>
 
   <p>
-    The main gameplay prop used for interaction systems.
-  </p>
-
-  <p>
-    This object represents the Unity/gameplay version of the physical prop. It is the visible object that
-    interacts with score zones, danger zones, and other gameplay mechanics.
+    The main gameplay prop used for interaction systems. This object represents the Unity/gameplay version
+    of the physical prop. It is the visible object that interacts with score zones, danger zones, and other
+    gameplay mechanics.
   </p>
 
   <h3>Target_MocapInput</h3>
 
   <p>
-    Invisible tracking anchor object.
-  </p>
-
-  <p>
-    Input systems move this object, and <code>Player_TrackedProp</code> follows it. This allows the template
-    to separate raw input data from the actual gameplay object.
+    Invisible tracking anchor object. Input systems move this object, and <code>Player_TrackedProp</code>
+    follows it. This allows the template to separate raw input data from the actual gameplay object.
   </p>
 
   <p>
@@ -325,12 +406,9 @@ OptiTrackClient</code></pre>
   <h3>Source_OptiTrackRigidBody_DO_NOT_EDIT</h3>
 
   <p>
-    The raw mocap source object.
-  </p>
-
-  <p>
-    This object is intended to receive live tracking data from the OptiTrack Unity plugin and Motive.
-    It should be assigned to the <code>Live Mocap Source</code> field on <code>InputManager</code>.
+    The raw mocap source object. This object is intended to receive live tracking data from the OptiTrack
+    Unity plugin and Motive. It should be assigned to the <code>Live Mocap Source</code> field on
+    <code>InputManager</code>.
   </p>
 
   <p>
@@ -341,174 +419,37 @@ OptiTrackClient</code></pre>
 
   <p>
     The scene object responsible for connecting Unity to Motive through the OptiTrack Unity plugin.
-  </p>
-
-  <p>
     This object should contain the OptiTrack streaming client component.
   </p>
 
   <h3>GameManager</h3>
 
-  <p>Handles:</p>
-
-  <pre><code>Score
-Timer
-Round state
-Reset behavior
-Game running state</code></pre>
+  <p>Handles score, timer, round state, reset behavior, and game running state.</p>
 
   <h3>InputManager</h3>
 
-  <p>Handles:</p>
-
-  <pre><code>Input mode switching
-Keyboard input
-Mocap placeholder movement
-Live mocap source movement
-Prop activation input
-Passing movement/state data to Player_TrackedProp</code></pre>
+  <p>
+    Handles input mode switching, keyboard input, mocap placeholder movement, live mocap source movement,
+    prop activation input, and passing movement/state data to <code>Player_TrackedProp</code>.
+  </p>
 
   <h3>UIManager</h3>
 
-  <p>Updates HUD elements including:</p>
-
-  <pre><code>Score
-Timer
-Prop state
-Input mode</code></pre>
+  <p>
+    Updates HUD elements including score, timer, prop state, and input mode.
+  </p>
 
   <h3>AudioManager</h3>
 
-  <p>Handles simple sound effect playback for:</p>
-
-  <pre><code>Score zone interaction
-Danger zone interaction
-Prop activation
-Prop deactivation
-Input mode switching
-Scene reset</code></pre>
+  <p>
+    Handles simple sound effect playback for score zone interaction, danger zone interaction, prop activation,
+    prop deactivation, input mode switching, and scene reset.
+  </p>
 
   <h3>PropState</h3>
 
   <p>
     Stores the current interaction state of the tracked prop.
-  </p>
-</details>
-
-<hr>
-
-<details open>
-  <summary><strong>Input Modes</strong></summary>
-
-  <p>
-    This template currently supports three input modes.
-  </p>
-
-  <h3>1. DebugKeyboard</h3>
-
-  <p>
-    Keyboard-based testing mode.
-  </p>
-
-  <p>
-    Use this mode first when designing and testing gameplay mechanics.
-  </p>
-
-  <p><strong>Controls:</strong></p>
-
-  <pre><code>WASD = Move Prop
-SPACE = Activate Prop
-R = Reset Scene
-M = Toggle Input Mode</code></pre>
-
-  <p>
-    In this mode, keyboard input moves <code>Target_MocapInput</code>, and
-    <code>Player_TrackedProp</code> follows it.
-  </p>
-
-  <h3>2. MocapPlaceholder</h3>
-
-  <p>
-    Simulated motion capture mode.
-  </p>
-
-  <p>
-    This mode uses automated circular movement to mimic incoming tracking data. It is useful for testing
-    motion-driven gameplay without needing access to the mocap lab.
-  </p>
-
-  <p>In this mode:</p>
-
-  <pre><code>Target_MocapInput moves automatically in a circle
-Player_TrackedProp follows Target_MocapInput
-SPACE still controls prop activation</code></pre>
-
-  <p>
-    This mode should remain in the template as a testing tool.
-  </p>
-
-  <h3>3. MocapLive</h3>
-
-  <p>
-    Live motion capture mode.
-  </p>
-
-  <p>
-    This mode is intended for OptiTrack Motive integration.
-  </p>
-
-  <p>In this mode:</p>
-
-  <pre><code>Source_OptiTrackRigidBody_DO_NOT_EDIT provides live mocap position/rotation
-InputManager copies that data to Target_MocapInput
-Player_TrackedProp follows Target_MocapInput</code></pre>
-
-  <p>Live mocap mode requires:</p>
-
-  <pre><code>OptiTrack Unity Plugin
-Motive streaming enabled
-A rigid body created in Motive
-OptiTrackClient configured in Unity
-Source_OptiTrackRigidBody_DO_NOT_EDIT assigned as Live Mocap Source</code></pre>
-</details>
-
-<hr>
-
-<details>
-  <summary><strong>Gameplay Rules</strong></summary>
-
-  <h3>Score Zones</h3>
-
-  <p>
-    Green score zones increase the score when the prop enters while active.
-  </p>
-
-  <pre><code>Active prop enters ScoreZone = score increases
-Inactive prop enters ScoreZone = no effect</code></pre>
-
-  <h3>Danger Zones</h3>
-
-  <p>
-    Red danger zones decrease the score when the prop enters while active.
-  </p>
-
-  <pre><code>Active prop enters DangerZone = score decreases
-Inactive prop enters DangerZone = no effect</code></pre>
-
-  <h3>Prop Activation</h3>
-
-  <p>
-    The prop must be active to interact with gameplay zones.
-  </p>
-
-  <p>
-    In DebugKeyboard and MocapPlaceholder modes, the prop is activated by holding:
-  </p>
-
-  <pre><code>SPACE</code></pre>
-
-  <p>
-    The prop changes material based on its input mode and active state.
   </p>
 </details>
 
@@ -523,12 +464,14 @@ Inactive prop enters DangerZone = no effect</code></pre>
 
   <p>Current audio events include:</p>
 
-  <pre><code>ScoreZone interaction
-DangerZone interaction
-Prop activated
-Prop deactivated
-Input mode changed
-Scene reset</code></pre>
+  <ul>
+    <li>ScoreZone interaction</li>
+    <li>DangerZone interaction</li>
+    <li>Prop activated</li>
+    <li>Prop deactivated</li>
+    <li>Input mode changed</li>
+    <li>Scene reset</li>
+  </ul>
 
   <p>
     Audio feedback is intended to help players understand the state of the prop and confirm gameplay interactions.
@@ -579,7 +522,7 @@ Scene reset</code></pre>
 
 <hr>
 
-<details open>
+<details>
   <summary><strong>Important Design Rules</strong></summary>
 
   <h3>Do</h3>
@@ -607,23 +550,6 @@ Scene reset</code></pre>
     <li>Do not make <code>Source_OptiTrackRigidBody_DO_NOT_EDIT</code> responsible for gameplay logic.</li>
     <li>Do not edit OptiTrack plugin files unless instructed.</li>
   </ul>
-</details>
-
-<hr>
-
-<details open>
-  <summary><strong>Recommended Workflow</strong></summary>
-
-  <ol>
-    <li>Duplicate the master scene.</li>
-    <li>Save your copy in <code>Assets/StudentWork/Scenes/</code>.</li>
-    <li>Prototype gameplay in DebugKeyboard mode.</li>
-    <li>Test score zones, danger zones, UI, and audio.</li>
-    <li>Test motion-based interaction using MocapPlaceholder mode.</li>
-    <li>Build and test physical/reactive prop systems.</li>
-    <li>Integrate motion capture tracking using MocapLive mode.</li>
-    <li>Polish gameplay, feedback, UI, and physical interaction.</li>
-  </ol>
 </details>
 
 <hr>
