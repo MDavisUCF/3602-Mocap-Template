@@ -124,7 +124,7 @@ public class InputManager : MonoBehaviour
         if (GameManager.instance != null && !GameManager.instance.gameRunning)
         {
             propActive = false;
-            trackedProp.ApplyInput(mocapTarget.position, false, currentMode);
+            trackedProp.ApplyInput(mocapTarget.position, false, currentMode, mocapTarget.rotation);
             return;
         }
 
@@ -146,7 +146,7 @@ public class InputManager : MonoBehaviour
 
         // After the input mode updates the target, send the final position and active state
         // to the visible gameplay prop.
-        trackedProp.ApplyInput(mocapTarget.position, propActive, currentMode);
+        trackedProp.ApplyInput(mocapTarget.position, propActive, currentMode, mocapTarget.rotation);
     }
 
     /// <summary>
