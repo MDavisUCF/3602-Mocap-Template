@@ -38,6 +38,10 @@ public class TrackedPropController : MonoBehaviour
     // or from active to inactive.
     private bool wasActiveLastFrame;
 
+    [Header("Mocap Rotation")]
+[Tooltip("Allow the visible prop to rotate with live motion tracking.")]
+public bool followMocapRotation = true;
+
     void Awake()
     {
         // Find the MeshRenderer attached to this same GameObject.
@@ -62,8 +66,15 @@ public class TrackedPropController : MonoBehaviour
     /// - whether it should be active
     /// - which input mode is currently being used
     /// </summary>
-    public void ApplyInput(Vector3 targetPosition, bool isActive, InputManager.InputMode inputMode)
+    public void ApplyInput(Vector3 targetPosition, bool isActive, InputManager.InputMode inputMode, Quaternion targetRotation)
+    transform.position = targetPosition;
     {
+    // In live mocap mode, optionally match the physical prop's rotation.
+// Keyboard and placeholder modes keep their existing rotation behavior.
+if (followMocapRotation && inputMode == InputManager.InputMode.MocapLive)
+{
+    transform.rotation = targetRotation;
+}
         // Move the visible prop to the current target position.
         transform.position = targetPosition;
 
