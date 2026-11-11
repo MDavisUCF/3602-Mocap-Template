@@ -1,574 +1,415 @@
-<h1>Physical Computing – Motion Capture Game Template</h1>
-
-<h2>Overview</h2>
-
-<p>
-  This Unity template serves as the foundation for motion-controlled and physical computing game projects.
-  It is designed to support rapid prototyping, gameplay experimentation, and future integration with
-  OptiTrack Motive motion capture systems and reactive physical props.
-</p>
-
-<p>
-  The template separates gameplay systems from hardware/input systems. This allows students to build and
-  test gameplay using keyboard controls before integrating motion capture, sensors, Arduino systems, or
-  physical props.
-</p>
-
-<p>
-  The project is intentionally simple and modular. Students are encouraged to expand the framework with
-  new mechanics, visuals, audio feedback, physical interactions, and alternative controller designs.
-</p>
-
-<hr>
-
-<h2>Unity Version</h2>
-
-<p>
-  This project was created using:
-</p>
-
-<p>
-  <strong>Unity 6.3 LTS</strong>
-</p>
-
-<p>
-  Open the project using the Unity version specified by your instructor. Opening the project in a different
-  Unity version may cause compatibility issues.
-</p>
-
-<hr>
-
-<h2>How to Download This Template</h2>
-
-<p>
-  To download this Unity template from GitHub:
-</p>
-
-<ol>
-  <li>Click the green <strong>Code</strong> button near the top of the GitHub page.</li>
-  <li>Select <strong>Download ZIP</strong>.</li>
-  <li>Extract/unzip the downloaded folder.</li>
-  <li>Open <strong>Unity Hub</strong>.</li>
-  <li>Click <strong>Add</strong> or <strong>Add project from disk</strong>.</li>
-  <li>Select the extracted project folder.</li>
-  <li>Open the project using the Unity version listed for the course.</li>
-</ol>
-
-<p>
-  <strong>Do not open the project directly from inside the ZIP file.</strong><br>
-  The folder must be fully extracted first.
-</p>
-
-<hr>
-
-<h2>Student Workflow Rule</h2>
-
-<p>
-  Do not modify the master template scene directly.
-</p>
-
-<p>
-  Before starting your project:
-</p>
-
-<ol>
-  <li>Open the template project in Unity.</li>
-  <li>Open the scene named <code>MASTER_DO_NOT_EDIT</code>.</li>
-  <li>Use <strong>File &gt; Save As</strong>.</li>
-  <li>Save your copy in <code>Assets/StudentWork/Scenes/</code>.</li>
-  <li>Rename your scene using this format: <code>TeamName_ProjectName.unity</code>.</li>
-</ol>
-
-<p>
-  All new student-created assets should go inside the <code>Assets/StudentWork/</code> folder.
-</p>
-
-<hr>
-
-<h2>Controls</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th>Input</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>WASD</code></td>
-      <td>Move prop in DebugKeyboard mode</td>
-    </tr>
-    <tr>
-      <td><code>SPACE</code></td>
-      <td>Activate prop</td>
-    </tr>
-    <tr>
-      <td><code>M</code></td>
-      <td>Toggle input mode</td>
-    </tr>
-    <tr>
-      <td><code>R</code></td>
-      <td>Reset scene</td>
-    </tr>
-  </tbody>
-</table>
+# Physical Computing: Motion Capture Game Template
 
-<hr>
+UPDATED 11/11/2026
 
-<h2>Input Modes</h2>
+A Unity starter project for creating games controlled by a **physical tracked prop** using **OptiTrack Motive**.
 
-<h3>1. DebugKeyboard</h3>
+This template provides a working motion capture system, gameplay interactions, scoring, a timer, and basic UI. Your job is to build on that foundation to create your own physical computing game.
 
-<p>
-  Keyboard-based testing mode. Use this mode first when designing and testing gameplay mechanics.
-</p>
-
-<p>
-  In this mode, keyboard input moves <code>Target_MocapInput</code>, and
-  <code>Player_TrackedProp</code> follows it.
-</p>
+**Course:** DIG 3602 Physical Computing  
+**Unity Version:** 6.3 LTS
 
-<h3>2. MocapPlaceholder</h3>
+---
 
-<p>
-  Simulated motion capture mode. This mode uses automated circular movement to mimic incoming tracking data.
-  It is useful for testing motion-driven gameplay without needing access to the mocap lab.
-</p>
-
-<p>
-  In this mode, <code>Target_MocapInput</code> moves automatically in a circle, and
-  <code>Player_TrackedProp</code> follows it. <code>SPACE</code> still controls prop activation.
-</p>
+## Getting Started
 
-<h3>3. MocapLive</h3>
+1. Open the project in Unity.
+2. Find the scene named `MASTER_DO_NOT_EDIT`.
+3. **Duplicate the scene** and rename your copy for your project.
+4. Open your duplicated scene.
+5. Press Play to test the starter game.
+6. Use `DebugKeyboard` to develop and test your gameplay before connecting physical hardware.
 
-<p>
-  Live motion capture mode. This mode is intended for OptiTrack Motive integration.
-</p>
+**Do not modify the master scene directly.** It exists as a working reference in case you need to restore something.
 
-<p>
-  In this mode, <code>Source_OptiTrackRigidBody_DO_NOT_EDIT</code> provides live mocap position/rotation,
-  <code>InputManager</code> copies that data to <code>Target_MocapInput</code>, and
-  <code>Player_TrackedProp</code> follows <code>Target_MocapInput</code>.
-</p>
+The red and green gameplay zones are examples. You are welcome to redesign or replace them.
 
-<hr>
+---
 
-<h2>Gameplay Rules</h2>
+## Controls & Input Modes
 
-<h3>Score Zones</h3>
+The template supports two input modes.
 
-<p>
-  Green score zones increase the score when the prop enters while active.
-</p>
+| Control | Function |
+|---|---|
+| **WASD** | Move the prop in keyboard mode |
+| **SPACE** | Activate the prop in keyboard mode |
+| **M** | Switch between keyboard and motion capture |
+| **R** | Reset the current scene |
 
-<pre><code>Active prop enters ScoreZone = score increases
-Inactive prop enters ScoreZone = no effect</code></pre>
+### DebugKeyboard
 
-<h3>Danger Zones</h3>
+This mode allows you to test your game without motion capture hardware.
 
-<p>
-  Red danger zones decrease the score when the prop enters while active.
-</p>
+- WASD moves the gameplay prop.
+- Holding SPACE makes the prop active.
+- Releasing SPACE makes the prop inactive.
+- The prop remains visible even when inactive.
 
-<pre><code>Active prop enters DangerZone = score decreases
-Inactive prop enters DangerZone = no effect</code></pre>
+Use this mode while developing and testing mechanics outside the mocap lab.
 
-<h3>Prop Activation</h3>
+### MocapLive
 
-<p>
-  The prop must be active to interact with gameplay zones. In DebugKeyboard and MocapPlaceholder modes,
-  the prop is activated by holding <code>SPACE</code>.
-</p>
+This mode uses live tracking data from OptiTrack Motive.
 
-<p>
-  The prop changes material based on its input mode and active state.
-</p>
+The physical prop controls the position and rotation of the gameplay prop in Unity.
 
-<hr>
+**Activation is automatic:**
 
-<h2>Recommended Workflow</h2>
+- **Tracking detected:** The gameplay prop appears and becomes active.
+- **Tracking lost:** The gameplay prop disappears and becomes inactive.
+- **Tracking restored:** The gameplay prop reappears and becomes active again.
 
-<ol>
-  <li>Duplicate the master scene.</li>
-  <li>Save your copy in <code>Assets/StudentWork/Scenes/</code>.</li>
-  <li>Prototype gameplay in DebugKeyboard mode.</li>
-  <li>Test score zones, danger zones, UI, and audio.</li>
-  <li>Test motion-based interaction using MocapPlaceholder mode.</li>
-  <li>Build and test physical/reactive prop systems.</li>
-  <li>Integrate motion capture tracking using MocapLive mode.</li>
-  <li>Polish gameplay, feedback, UI, and physical interaction.</li>
-</ol>
+When the prop loses tracking, its gameplay colliders are disabled so it cannot trigger scoring or penalties.
 
-<hr>
+You do not need to press SPACE while using MocapLive.
 
-<details>
-  <summary><strong>Project Folder Structure</strong></summary>
+**Important:** The template currently uses the age of received tracking data to determine whether the prop is tracked. Test deliberate tracking loss in Motive to verify this behaves correctly with the current streaming configuration.
 
-  <p>
-    The main template files are located in:
-  </p>
+---
 
-  <pre><code>Assets/_CourseTemplate/</code></pre>
+## Understanding the Scene
 
-  <h3>Folder Overview</h3>
+The template separates motion capture input from gameplay interactions.
 
-  <pre><code>_CourseTemplate
-├── Audio
-├── Documentation
-├── Materials
-├── OptiTrack
-├── Prefabs
-├── Scenes
-├── Scripts
-└── Sprites_UI</code></pre>
+| GameObject | Purpose |
+|---|---|
+| `GameManager` | Handles scoring, timer, and resetting |
+| `InputManager` | Handles keyboard and live mocap input |
+| `UIManager` | Updates the HUD |
+| `AudioManager` | Handles gameplay sound effects |
+| `Player_TrackedProp` | Main gameplay object representing the physical prop |
+| `Target_MocapInput` | Invisible target that receives movement information |
+| `Source_OptiTrackRigidBody_DO_NOT_EDIT` | Receives raw Motive tracking data |
+| `OptiTrackClient` | Connects Unity to the Motive stream |
+| `ScoreZone` | Example positive scoring area |
+| `DangerZone` | Example negative scoring area |
+| `Floor` | Playable floor surface |
+| `PlayArea_Bounds` | Visual representation of the physical play area |
+| `UI_Canvas` | Contains the HUD |
 
-  <h3>Audio</h3>
+### How tracking reaches the game
 
-  <p>
-    Contains sound effects used by the template.
-  </p>
-
-  <pre><code>SFX_Score
-SFX_Danger
-SFX_PropActivate
-SFX_PropDeactivate
-SFX_ModeToggle
-SFX_Reset</code></pre>
-
-  <h3>Documentation</h3>
-
-  <p>
-    Contains README files, setup notes, and student instructions.
-  </p>
-
-  <h3>Materials</h3>
-
-  <p>
-    Contains materials for the tracked prop, score zones, danger zones, floor, and visual debugging.
-  </p>
-
-  <h3>OptiTrack</h3>
-
-  <p>
-    Contains OptiTrack Unity plugin files and mocap-related systems.
-  </p>
-
-  <p>
-    <strong>Do not edit files in this folder unless instructed.</strong>
-  </p>
-
-  <h3>Prefabs</h3>
-
-  <p>
-    Contains reusable gameplay objects.
-  </p>
-
-  <pre><code>Player_TrackedProp
-ScoreZone
-DangerZone</code></pre>
-
-  <p>
-    Students are encouraged to duplicate and modify prefabs rather than rebuilding systems from scratch.
-  </p>
-
-  <h3>Scenes</h3>
-
-  <p>
-    Contains the master template scene and any starter scenes.
-  </p>
-
-  <h3>Scripts</h3>
-
-  <p>
-    Contains the template scripts, organized by system type.
-  </p>
-
-  <pre><code>Scripts
-├── Audio
-├── Core
-├── Gameplay
-├── Input
-└── UI</code></pre>
-
-  <h3>Sprites_UI</h3>
-
-  <p>
-    Reserved for UI images, icons, and visual interface elements.
-  </p>
-</details>
-
-<hr>
-
-<details>
-  <summary><strong>StudentWork Folder</strong></summary>
-
-  <p>
-    Students should place their own work in:
-  </p>
-
-  <pre><code>Assets/StudentWork/</code></pre>
-
-  <p>Recommended structure:</p>
-
-  <pre><code>StudentWork
-├── Audio
-├── Materials
-├── Prefabs
-├── Scenes
-└── Scripts</code></pre>
-
-  <p>
-    This keeps student-created assets separate from the master template systems.
-  </p>
-</details>
-
-<hr>
-
-<details>
-  <summary><strong>Scene Hierarchy</strong></summary>
-
-  <p>
-    The scene is organized into major sections:
-  </p>
-
-  <pre><code>MASTER_DO_NOT_EDIT
-├── --- SYSTEMS ---
-├── --- CAMERA / LIGHTING ---
-├── --- GAMEPLAY ---
-├── --- OPTITRACK / MOCAP ---
-├── --- UI ---
-└── --- DEBUG / TESTING ---</code></pre>
-
-  <h3>Systems</h3>
-
-  <pre><code>GameManager
+```text
+Physical Prop
+     ↓
+OptiTrack Cameras
+     ↓
+Motive Rigid Body
+     ↓
+OptiTrackClient
+     ↓
+Source_OptiTrackRigidBody_DO_NOT_EDIT
+     ↓
 InputManager
-UIManager
-AudioManager
-EventSystem</code></pre>
-
-  <h3>Camera / Lighting</h3>
-
-  <pre><code>Main Camera
-Directional Light</code></pre>
-
-  <h3>Gameplay</h3>
-
-  <pre><code>Floor
-Player_TrackedProp
+     ↓
 Target_MocapInput
-ScoreZone
-DangerZone</code></pre>
+     ↓
+Player_TrackedProp
+     ↓
+Gameplay Interactions
+```
 
-  <h3>OptiTrack / Mocap</h3>
+This structure allows you to develop your game using keyboard controls and transition to motion capture without rebuilding the gameplay system.
 
-  <pre><code>Source_OptiTrackRigidBody_DO_NOT_EDIT
-OptiTrackClient</code></pre>
+---
 
-  <h3>UI</h3>
+## Physical Play Area
 
-  <pre><code>UI_Canvas</code></pre>
+The template uses the approximate usable dimensions of the motion capture space established by the Piñata project.
 
-  <h3>Debug / Testing</h3>
+| Dimension | Unity Units |
+|---|---|
+| Width (X) | 9.31 |
+| Depth (Z) | 4.95 |
 
-  <p>
-    Reserved for future testing objects and debugging tools.
-  </p>
-</details>
+`PlayArea_Bounds` shows the approximate playable region.
 
-<hr>
+These boundaries are visual guides, not physical barriers. They should not have colliders that prevent the tracked prop from moving.
 
-<details>
-  <summary><strong>Core Systems</strong></summary>
+Design your gameplay around what players can physically reach within the capture space.
 
-  <h3>Player_TrackedProp</h3>
+**Remember:** The virtual boundaries must be aligned with the actual motion capture coordinates. Matching their dimensions alone does not guarantee alignment.
 
-  <p>
-    The main gameplay prop used for interaction systems. This object represents the Unity/gameplay version
-    of the physical prop. It is the visible object that interacts with score zones, danger zones, and other
-    gameplay mechanics.
-  </p>
+---
 
-  <h3>Target_MocapInput</h3>
+## Connecting Your Physical Prop to a 3D Model
 
-  <p>
-    Invisible tracking anchor object. Input systems move this object, and <code>Player_TrackedProp</code>
-    follows it. This allows the template to separate raw input data from the actual gameplay object.
-  </p>
+Your game uses two different representations of the prop:
 
-  <p>
-    Future input systems should update <code>Target_MocapInput</code> rather than directly controlling
-    <code>Player_TrackedProp</code>.
-  </p>
+1. **Physical Prop:** The real object equipped with IR LEDs or markers and tracked by Motive.
+2. **Virtual Prop:** The 3D model players see and interact with inside Unity.
 
-  <h3>Source_OptiTrackRigidBody_DO_NOT_EDIT</h3>
+The physical prop controls the virtual prop through the existing tracking system.
 
-  <p>
-    The raw mocap source object. This object is intended to receive live tracking data from the OptiTrack
-    Unity plugin and Motive. It should be assigned to the <code>Live Mocap Source</code> field on
-    <code>InputManager</code>.
-  </p>
+### Step 1: Import Your 3D Model
 
-  <p>
-    This object should not contain gameplay logic.
-  </p>
+Import your model into the Unity project's `Assets` folder.
 
-  <h3>OptiTrackClient</h3>
+Your model may be an FBX, prefab, or another supported 3D asset.
 
-  <p>
-    The scene object responsible for connecting Unity to Motive through the OptiTrack Unity plugin.
-    This object should contain the OptiTrack streaming client component.
-  </p>
+In the Hierarchy, locate:
 
-  <h3>GameManager</h3>
+`Player_TrackedProp`
 
-  <p>Handles score, timer, round state, reset behavior, and game running state.</p>
+**Drag your imported model underneath `Player_TrackedProp` so it becomes a child object.**
 
-  <h3>InputManager</h3>
+Your Hierarchy should look something like:
 
-  <p>
-    Handles input mode switching, keyboard input, mocap placeholder movement, live mocap source movement,
-    prop activation input, and passing movement/state data to <code>Player_TrackedProp</code>.
-  </p>
+```text
+Player_TrackedProp
+    └── YourModel
+```
 
-  <h3>UIManager</h3>
+Do not replace the entire `Player_TrackedProp` GameObject with your imported asset.
 
-  <p>
-    Updates HUD elements including score, timer, prop state, and input mode.
-  </p>
+### Step 2: Position and Align Your Model
 
-  <h3>AudioManager</h3>
+Select your imported child model.
 
-  <p>
-    Handles simple sound effect playback for score zone interaction, danger zone interaction, prop activation,
-    prop deactivation, input mode switching, and scene reset.
-  </p>
+Start with these local Transform values:
 
-  <h3>PropState</h3>
+| Property | Value |
+|---|---|
+| Position | (0, 0, 0) |
+| Rotation | (0, 0, 0) |
+| Scale | (1, 1, 1) |
 
-  <p>
-    Stores the current interaction state of the tracked prop.
-  </p>
-</details>
+Then adjust the child's local position, rotation, and scale as necessary.
 
-<hr>
+**The model should be aligned relative to the physical prop's tracked origin.**
 
-<details>
-  <summary><strong>Audio Feedback</strong></summary>
+For example, if your physical controller is a sword, position the virtual sword so its handle and orientation make sense relative to where Motive tracks the physical object.
 
-  <p>
-    The template includes simple sound effect support through <code>AudioManager</code>.
-  </p>
+This is important because rotating the physical prop should cause the virtual model to rotate naturally.
 
-  <p>Current audio events include:</p>
+### Step 3: Hide the Original Purple Cube
 
-  <ul>
-    <li>ScoreZone interaction</li>
-    <li>DangerZone interaction</li>
-    <li>Prop activated</li>
-    <li>Prop deactivated</li>
-    <li>Input mode changed</li>
-    <li>Scene reset</li>
-  </ul>
+The starter gameplay prop includes a simple purple cube.
 
-  <p>
-    Audio feedback is intended to help players understand the state of the prop and confirm gameplay interactions.
-  </p>
+Once your model is positioned correctly:
 
-  <p>
-    Students may replace the default sound effects with their own, but should keep audio calls connected to the
-    appropriate gameplay events.
-  </p>
-</details>
+1. Select `Player_TrackedProp`.
+2. Find its Mesh Renderer component.
+3. Disable the Mesh Renderer.
 
-<hr>
+This hides the starter cube while allowing your custom child model to remain visible.
 
-<details>
-  <summary><strong>OptiTrack Integration Notes</strong></summary>
+**Do not disable or delete `Player_TrackedProp`.**
 
-  <p>
-    The intended mocap data flow is:
-  </p>
+That GameObject contains the scripts responsible for the gameplay prop's movement and active state.
 
-  <pre><code>Physical Prop with IR LEDs
-→ OptiTrack Cameras
-→ Motive Rigid Body
-→ OptiTrack Unity Plugin
-→ Source_OptiTrackRigidBody_DO_NOT_EDIT
-→ InputManager
-→ Target_MocapInput
-→ Player_TrackedProp
-→ Gameplay Zones</code></pre>
+### Step 4: Configure Colliders
 
-  <p>
-    The <code>Source_OptiTrackRigidBody_DO_NOT_EDIT</code> object represents raw tracking data.
-  </p>
+Your custom model may have a different shape than the starter cube.
 
-  <p>
-    The <code>Target_MocapInput</code> object represents the cleaned/mapped input target used by the game.
-  </p>
+Check the existing collider on `Player_TrackedProp`.
 
-  <p>
-    The <code>Player_TrackedProp</code> object represents the gameplay prop that interacts with zones and mechanics.
-  </p>
+You can resize or replace it with colliders that better represent your virtual prop.
 
-  <p>
-    This separation allows students to test gameplay without mocap hardware and integrate live tracking later
-    without rewriting core gameplay systems.
-  </p>
-</details>
+Make sure the gameplay prop and interaction zones have the appropriate Collider, Trigger, and Rigidbody configuration for Unity physics.
 
-<hr>
+The template uses colliders to detect interactions with gameplay zones.
 
-<details>
-  <summary><strong>Important Design Rules</strong></summary>
+When tracking is lost in MocapLive, `TrackedPropController` disables the gameplay prop's colliders until tracking returns.
 
-  <h3>Do</h3>
+### Step 5: Connect the Physical Prop in Motive
 
-  <ul>
-    <li>Prototype gameplay in DebugKeyboard mode first.</li>
-    <li>Use MocapPlaceholder mode to test motion-based gameplay without hardware.</li>
-    <li>Use MocapLive only when OptiTrack/Motive is available.</li>
-    <li>Build gameplay systems using <code>PropState</code> and <code>TrackedPropController</code>.</li>
-    <li>Update <code>Target_MocapInput</code> rather than directly moving <code>Player_TrackedProp</code>.</li>
-    <li>Keep gameplay systems modular.</li>
-    <li>Organize hierarchy objects cleanly.</li>
-    <li>Comment scripts when adding new systems.</li>
-    <li>Duplicate the template scene before making major changes.</li>
-  </ul>
+Your physical prop must be configured as a **Rigid Body** in OptiTrack Motive.
 
-  <h3>Do Not</h3>
+1. Attach your IR LEDs or tracking markers securely to the physical prop.
+2. Create a Rigid Body in Motive.
+3. Verify that Motive recognizes the prop and tracks its movement and rotation.
+4. Find the Rigid Body's **Streaming ID**.
 
-  <ul>
-    <li>Do not modify the <code>MASTER_DO_NOT_EDIT</code> scene directly.</li>
-    <li>Do not delete manager objects without understanding dependencies.</li>
-    <li>Do not directly tie gameplay systems to hardware-specific input.</li>
-    <li>Do not hardcode gameplay logic directly into input providers.</li>
-    <li>Do not add OptiTrack tracking scripts directly to <code>Player_TrackedProp</code> unless instructed.</li>
-    <li>Do not make <code>Source_OptiTrackRigidBody_DO_NOT_EDIT</code> responsible for gameplay logic.</li>
-    <li>Do not edit OptiTrack plugin files unless instructed.</li>
-  </ul>
-</details>
+In Unity, select:
 
-<hr>
+`Source_OptiTrackRigidBody_DO_NOT_EDIT`
 
-<details>
-  <summary><strong>Known Notes</strong></summary>
+Under the `OptitrackRigidBody` component:
 
-  <ul>
-    <li>Input mode persists after reset.</li>
-    <li>The tracked prop changes material based on input mode and active state.</li>
-    <li>MocapPlaceholder mode simulates incoming tracking data.</li>
-    <li>MocapLive mode expects a live mocap source object.</li>
-    <li>Future tracking systems should update <code>Target_MocapInput</code> rather than directly controlling <code>Player_TrackedProp</code>.</li>
-    <li><code>Player_TrackedProp</code> is the gameplay object, not the raw mocap source.</li>
-    <li><code>Source_OptiTrackRigidBody_DO_NOT_EDIT</code> is the raw mocap source, not the gameplay prop.</li>
-    <li>Reset reloads the scene after a short delay so the reset sound can play.</li>
-  </ul>
-</details>
+- Set **Streaming Client** to `OptiTrackClient`.
+- Set **Rigid Body ID** to match the ID configured in Motive.
 
-<hr>
+Next, select `InputManager` and confirm:
 
-<p><strong>End of README</strong></p>
+- **Live Mocap Source:** `Source_OptiTrackRigidBody_DO_NOT_EDIT` Transform
+- **Live Rigid Body:** `Source_OptiTrackRigidBody_DO_NOT_EDIT` OptitrackRigidBody component
+
+You should not need to modify any of the core tracking scripts to connect your own physical prop.
+
+### Step 6: Test Your Model
+
+Enable streaming in Motive and press Play in Unity.
+
+Press **M** to switch to MocapLive.
+
+Test the following:
+
+- Move the physical prop left and right.
+- Move it forward and backward.
+- Raise and lower it.
+- Rotate it in different directions.
+- Temporarily block its markers until Motive loses tracking.
+
+Your virtual model should follow the physical prop's movement and rotation.
+
+When tracking is lost, the model should disappear and become unable to interact with gameplay zones.
+
+When tracking returns, it should reappear automatically.
+
+If the model faces the wrong direction, adjust the **child model's local rotation** or the mocap rotation offset in `InputManager`.
+
+If the tracked position needs adjustment, use the position offset in `InputManager`.
+
+Do not reposition the raw OptiTrack source to compensate for an incorrectly aligned model.
+
+### Important: Where Your Model Belongs
+
+Your custom model should be a child of:
+
+**`Player_TrackedProp`**
+
+Do not attach it directly to:
+
+- `Source_OptiTrackRigidBody_DO_NOT_EDIT`
+- `OptiTrackClient`
+- `Target_MocapInput`
+
+Those objects are part of the tracking and input system.
+
+Attaching your model to the wrong object may cause it to move without properly responding to activation, visibility, or collision behavior.
+
+**Note:** `TrackedPropController` identifies child renderers and colliders when the scene starts. Add your custom model and gameplay colliders before pressing Play.
+
+---
+
+## Setting Up OptiTrack Streaming
+
+The project already contains the OptiTrack Unity plugin and the necessary scene objects.
+
+At the mocap station:
+
+1. Open Motive.
+2. Confirm your physical prop is recognized as a Rigid Body.
+3. Enable streaming in Motive.
+4. Verify that the `OptiTrackClient` settings in Unity match the streaming configuration in Motive.
+5. Verify the Rigid Body ID matches.
+6. Press Play in Unity and switch to MocapLive.
+
+When Motive and Unity are running on the same computer, a local Unicast configuration using `127.0.0.1` may be used when both applications are configured accordingly.
+
+**Do not disable or delete the OptiTrack streaming objects.**
+
+These objects may be invisible during gameplay, but they are required for live tracking.
+
+---
+
+## Starter Gameplay
+
+The template includes two basic gameplay zones.
+
+### ScoreZone
+
+Entering this area while the prop is active increases the player's score.
+
+### DangerZone
+
+Entering this area while the prop is active decreases the player's score.
+
+Inactive props cannot trigger either interaction.
+
+The starter game also includes:
+
+- A 60-second round timer
+- Score tracking
+- Activation feedback
+- Sound effects
+- Reset functionality
+
+These systems demonstrate how motion and prop activation can influence gameplay.
+
+**You are not required to keep these mechanics.**
+
+You can redesign the scoring system, replace the zones, create different objectives, or build completely new interactions.
+
+The existing zones use trigger-entry events, so simply remaining inside a zone does not continuously add or subtract points.
+
+---
+
+## What You Can Customize
+
+This is a starting framework, not a completed game.
+
+You are encouraged to modify and expand:
+
+- The virtual prop and its appearance
+- Gameplay objectives and mechanics
+- Score and danger zones
+- Level design and environment
+- UI and visual feedback
+- Sound effects
+- Game timer and scoring behavior
+- Additional scripts and systems
+
+You may also add other physical computing components and interactions as appropriate for your project.
+
+### What Should Stay Connected
+
+The core tracking system should remain functional.
+
+Avoid deleting or disconnecting:
+
+- `InputManager`
+- `Target_MocapInput`
+- `Source_OptiTrackRigidBody_DO_NOT_EDIT`
+- `OptiTrackClient`
+- The gameplay components on `Player_TrackedProp`
+
+Keep raw tracking data separate from gameplay logic.
+
+When extending the project, use the existing gameplay prop and its active state rather than putting scoring or interaction logic directly on the OptiTrack source.
+
+---
+
+## Troubleshooting
+
+| Problem | What to Check |
+|---|---|
+| Prop does not move in MocapLive | Motive streaming, connection settings, Rigid Body ID, and InputManager references |
+| Prop is always invisible | Confirm tracking is working and check the tracking timeout |
+| Model moves but doesn't interact | Verify colliders, trigger settings, and Rigidbody configuration |
+| Model faces the wrong direction | Adjust the model's local rotation or mocap rotation offset |
+| Model appears in the wrong position | Check the model's local position and mocap position offset |
+| Small cube remains visible | Disable Mesh Renderer on the unused tracking helper or starter cube |
+| Score does not change | Confirm the prop is active and entering a valid trigger zone |
+| Input controls seem incorrect | Check the current input mode and press M to switch |
+
+If something is not working, test the starter gameplay using `DebugKeyboard` first.
+
+This helps determine whether the issue is related to gameplay logic or motion capture tracking.
+
+---
+
+## Recommended Workflow
+
+1. Duplicate the master scene.
+2. Develop and test your gameplay using DebugKeyboard.
+3. Import and attach your custom 3D model.
+4. Adjust its alignment and collision geometry.
+5. Build and configure your physical tracked prop.
+6. Verify the rigid body in Motive.
+7. Connect and test MocapLive.
+8. Confirm tracking loss and interaction behavior.
+9. Test your game with another player.
+10. Polish and finalize the experience.
+
+---
+
+## Final Reminder
+
+The purpose of this template is to provide a working technical foundation for motion-controlled gameplay.
+
+You should not feel limited by the sample scoring zones, interface, or starter visuals.
+
+**Use the existing motion capture system to create your own physical interaction and gameplay experience.**
